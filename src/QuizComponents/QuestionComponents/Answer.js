@@ -1,14 +1,14 @@
 import React from "react";
 import parse from "html-react-parser";
 
-const Answer = ({ question, showResults, choosenAnswer, answer }) => {
-  function getAnswerClass(question, answer) {
+const Answer = ({ question, showResults, chooseAnswer, answer }) => {
+  function getAnswerClass() {
     if (showResults === true) {
-      if (answer === question.correct_answer) {
+      if (answer === question.correctAnswer) {
         return "correct-answer";
       } else if (
         answer === question.selectedAnswer &&
-        question.incorrect_answers.includes(question.selectedAnswer)
+        question.incorrectAnswers.includes(question.selectedAnswer)
       ) {
         return "incorrect-answer";
       } else {
@@ -18,22 +18,27 @@ const Answer = ({ question, showResults, choosenAnswer, answer }) => {
       if (question.selectedAnswer === answer) {
         return "answer-checked";
       } else {
-        return "answer";
+        return "";
       }
     }
   }
 
   return (
-    <div className={`answer ${getAnswerClass(question, answer)}`} key={answer}>
+    <div key={answer}>
       <input
         type="radio"
-        id={answer}
+        id={question.id + answer}
         name={question.id}
         value={answer}
         checked={question.selectedAnswer === answer}
-        onChange={choosenAnswer}
+        onChange={chooseAnswer}
       />
-      <label htmlFor={answer}>{parse(answer)}</label>
+      <label
+        className={`answer ${getAnswerClass(question, answer)}`}
+        htmlFor={question.id + answer}
+      >
+        {parse(answer)}
+      </label>
     </div>
   );
 };

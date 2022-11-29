@@ -1,3 +1,4 @@
+import React from "react";
 import Blob from "./Blob";
 import { useNavigate } from "react-router-dom";
 

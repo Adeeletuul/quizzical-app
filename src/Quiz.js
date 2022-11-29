@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import Blob from "./Blob";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Question from "./QuizComponents/Question.js";
 import ResultsFooter from "./QuizComponents/ResultsFooter";
@@ -12,7 +12,6 @@ const Quiz = () => {
   const [quizData, setQuizData] = useState([]);
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
-  const [reset, setReset] = useState(0);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -24,8 +23,8 @@ const Quiz = () => {
             return {
               id: nanoid(),
               question: result.question,
-              correct_answer: result.correct_answer,
-              incorrect_answers: result.incorrect_answers,
+              correctAnswer: result.correct_answer,
+              incorrectAnswers: result.incorrect_answers,
               answers: [
                 ...result.incorrect_answers,
                 result.correct_answer,
@@ -39,9 +38,9 @@ const Quiz = () => {
       }
     };
     fetchItems();
-  }, [reset]);
+  }, []);
 
-  function choosenAnswer(event) {
+  function chooseAnswer(event) {
     const { name, value } = event.target;
     setQuizData(
       quizData.map((question) => {
@@ -56,7 +55,7 @@ const Quiz = () => {
   function checkAnswers() {
     let correctAnswers = 0;
     quizData.map((question) => {
-      if (question.selectedAnswer === question.correct_answer) {
+      if (question.selectedAnswer === question.correctAnswer) {
         correctAnswers++;
       }
       return correctAnswers;
@@ -71,7 +70,6 @@ const Quiz = () => {
     setShowResults(false);
     setScore(0);
     setQuizData([]);
-    setReset((prevState) => prevState + 1);
     navigate("/");
   }
 
@@ -85,16 +83,11 @@ const Quiz = () => {
             question={question}
             setScore={setScore}
             showResults={showResults}
-            choosenAnswer={choosenAnswer}
+            chooseAnswer={chooseAnswer}
           />
         ))}
         {showResults ? (
-          <ResultsFooter
-            score={score}
-            reset={reset}
-            setReset={setReset}
-            playAgain={playAgain}
-          />
+          <ResultsFooter score={score} playAgain={playAgain} />
         ) : (
           <QuizFooter checkAnswers={checkAnswers} />
         )}

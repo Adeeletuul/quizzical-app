@@ -1,6 +1,6 @@
 import React from "react";
 
-const Results = ({ score, reset, setReset, playAgain }) => {
+const Results = ({ score, playAgain }) => {
   return (
     <div className="results-container">
       <div className="results">You scored {score}/5 correct answers</div>

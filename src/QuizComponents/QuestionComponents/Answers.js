@@ -1,7 +1,7 @@
 import React from "react";
 import Answer from "./Answer";
 
-const Answers = ({ question, showResults, choosenAnswer }) => {
+const Answers = ({ question, showResults, chooseAnswer }) => {
   return (
     <div className="answers-container">
       {question.answers.map((answer) => (
@@ -10,7 +10,7 @@ const Answers = ({ question, showResults, choosenAnswer }) => {
           answer={answer}
           question={question}
           showResults={showResults}
-          choosenAnswer={choosenAnswer}
+          chooseAnswer={chooseAnswer}
         />
       ))}
     </div>
